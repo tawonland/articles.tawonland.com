@@ -19,6 +19,17 @@ class App_Model extends MY_Model
         parent::__construct();
     }
 
+    function getConn($conn = ''){
+
+        if(empty($conn)){
+            return $this->load->database('default', TRUE);
+        }
+        else{
+            return $this->load->database($conn, TRUE);
+        }
+
+    }
+
     function getSchema() {
         global $conf;
 
@@ -30,8 +41,7 @@ class App_Model extends MY_Model
     }
 
     function getTable($table = null) {
-        echo $table;
-        die();
+
         if (empty($table))
             $table = static::TABLE;
 
@@ -71,5 +81,15 @@ class App_Model extends MY_Model
             $aksi .= static::LABEL;
 
         return 'Data ' . ($err == '0' ? 'berhasil' : 'gagal') . ' ' .$aksi . (empty($msg) ? '' : ', ' . $msg);
+    }
+
+    function getRows($conn = ''){
+        
+        $conn   = $this->getConn($conn);
+        $table  = $this->getTable();
+
+        $query  = $conn->get($table);
+
+        return $query->result();
     }
 }

@@ -1,25 +1,28 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Welcome extends Front_Controller {
+	
+	public function __construct()
+    {
+        parent::__construct();
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
+    }
+
 	public function index()
-	{
-		$this->load->view('welcome_message');
-	}
+    {
+
+        //load model
+        $this->load->model('ms_categories_model');
+
+
+        $this->data['title'] = 'Welcome';
+        $this->data['theme'] = 'theme1/index';
+
+        $this->data['menu'] = $this->ms_categories_model->getRows();
+        $this->db->last_query();
+        
+
+        $this->load->view('frontend/theme',$this->data);
+    }
 }

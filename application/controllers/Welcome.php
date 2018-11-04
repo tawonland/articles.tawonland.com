@@ -15,7 +15,6 @@ class Welcome extends Front_Controller {
         //load model
         $this->load->model('ms_categories_model');
 
-
         $this->data['title'] = 'Welcome';
         $this->data['theme'] = 'theme1/index';
 
